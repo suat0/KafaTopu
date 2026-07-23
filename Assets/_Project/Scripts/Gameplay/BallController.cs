@@ -3,6 +3,7 @@ using UnityEngine;
 public class BallController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    [SerializeField] private ScoreData scoreData;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -16,6 +17,15 @@ public class BallController : MonoBehaviour
             rb.velocity = Vector2.zero; // Reset velocity to stop the ball from moving
             transform.position = new Vector3(0, 0, 0);
            
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            scoreData.AddPoint(1);
+            Debug.Log("Score: " + scoreData.GetScore());
         }
     }
 }
