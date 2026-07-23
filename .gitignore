@@ -1,0 +1,15 @@
+.vscode/
+/Library/
+/Temp/
+/Logs/
+/UserSettings/
+/obj/
+/Build/
+/Builds/
+.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.pidb
+
