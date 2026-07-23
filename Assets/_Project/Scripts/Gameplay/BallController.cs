@@ -4,6 +4,9 @@ public class BallController : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private ScoreData scoreData;
+    [SerializeField] private GameOverUI gameOverUI;
+    private bool isGameOver = false;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -11,12 +14,10 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        if (transform.position.y < -6f)
+        if (!isGameOver && transform.position.y < -6f)
         {
-            Debug.Log("Ball fell below the screen. Resetting position.");
-            rb.velocity = Vector2.zero; // Reset velocity to stop the ball from moving
-            transform.position = new Vector3(0, 0, 0);
-           
+            gameOverUI.Show();
+            isGameOver = true;
         }
     }
 
@@ -28,4 +29,12 @@ public class BallController : MonoBehaviour
             Debug.Log("Score: " + scoreData.GetScore());
         }
     }
+
+    public void ResetBall()
+    {
+        transform.position = Vector3.zero;
+        rb.velocity = Vector2.zero;
+        isGameOver = false;
+    }
+
 }
