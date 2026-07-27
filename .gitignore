@@ -13,3 +13,4 @@
 *.user
 *.pidb
 
+.DS_Store
