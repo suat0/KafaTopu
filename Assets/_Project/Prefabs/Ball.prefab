@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8969369973685664075}
   - component: {fileID: 4766794378948772141}
   - component: {fileID: -879918915032060131}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,3 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreData: {fileID: 11400000, guid: f06b2d4204ec14a68b6367e3abb37b2c, type: 2}
+  gameOverUI: {fileID: 0}
