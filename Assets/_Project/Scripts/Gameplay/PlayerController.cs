@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private float coyoteCounter;
     private float jumpBufferCounter;
     private bool isGrounded;
+    private bool inputEnabled = true;
 
     void Awake()
     {
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!inputEnabled) return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump"))
@@ -88,6 +91,31 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = rb.velocity.y < 0f
             ? baseGravityScale * fallGravityMultiplier
             : baseGravityScale;
+    }
+
+    /// <summary>
+    /// Kickoff ve gol kutlamasi sirasinda oyuncuyu dondurur. Time.timeScale yerine
+    /// bunu kullaniyoruz: sadece oynanis durur, UI ve geri sayim akmaya devam eder.
+    /// </summary>
+    public void SetInputEnabled(bool value)
+    {
+        inputEnabled = value;
+
+        if (value) return;
+
+        horizontalInput = 0f;
+        jumpBufferCounter = 0f;
+        jumpReleased = false;
+        rb.velocity = new Vector2(0f, rb.velocity.y);
+    }
+
+    public void ResetTo(Vector2 position)
+    {
+        transform.position = position;
+
+        rb.velocity = Vector2.zero;
+        coyoteCounter = 0f;
+        jumpBufferCounter = 0f;
     }
 
     void OnDrawGizmosSelected()

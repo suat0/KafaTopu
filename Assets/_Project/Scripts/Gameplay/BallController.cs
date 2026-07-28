@@ -6,43 +6,37 @@ public class BallController : MonoBehaviour
     [SerializeField] private BallSettings settings;
     [SerializeField] private LayerMask playerLayer;
 
-    [SerializeField] private ScoreData scoreData;
-    [SerializeField] private GameOverUI gameOverUI;
-    [SerializeField] private float fallLimitY = -6f;
+    [Tooltip("Top bir sekilde sahadan kacarsa buraya dusunce basa doner")]
+    [SerializeField] private float fallLimitY = -8f;
 
     private Rigidbody2D rb;
-    private bool isGameOver;
+    private Vector2 lastSpawn;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    void Update()
-    {
-        if (!isGameOver && transform.position.y < fallLimitY)
-        {
-            isGameOver = true;
-
-            if (gameOverUI != null)
-            {
-                gameOverUI.Show();
-            }
-        }
+        lastSpawn = transform.position;
     }
 
     void FixedUpdate()
     {
+        if (!rb.simulated) return;
+
         // Sinirsiz hizlanan top collider'lari atlar ve oynanamaz hale gelir
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, settings.maxSpeed);
         rb.angularVelocity = Mathf.Clamp(rb.angularVelocity, -settings.maxSpin, settings.maxSpin);
+
+        // Guvenlik agi: normalde duvarlar ve zemin topu iceride tutar
+        if (transform.position.y < fallLimitY)
+        {
+            ResetTo(lastSpawn);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (!IsInLayerMask(collision.collider.gameObject.layer, playerLayer)) return;
 
-        scoreData.AddPoint(1);
         ApplyKick(collision);
     }
 
@@ -76,11 +70,26 @@ public class BallController : MonoBehaviour
         return (mask.value & (1 << layer)) != 0;
     }
 
-    public void ResetBall()
+    public void ResetTo(Vector2 position)
     {
-        transform.position = Vector3.zero;
+        lastSpawn = position;
+
+        transform.position = position;
+        transform.rotation = Quaternion.identity;
+
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        isGameOver = false;
+    }
+
+    /// <summary>Fizigi tamamen durdurur; gol kutlamasi ve kickoff sirasinda kullanilir.</summary>
+    public void SetSimulated(bool value)
+    {
+        if (!value)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        rb.simulated = value;
     }
 }

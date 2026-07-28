@@ -137,7 +137,9 @@ Kafa topunda oyunun %70'i burada. Kontrol iyi hissettirmiyorsa gerisi kurtarmaz.
 
 ---
 
-## Faz 3 — Maç kuralları ve state machine
+## Faz 3 — Maç kuralları ve state machine ✅ TAMAMLANDI (2026-07-28)
+
+**Eksik bırakılanlar (bilinçli):** `Paused` state'i, kale direği/üst direk, ekranda geri sayım rakamı, uzatma/altın gol. Beraberlik kuralı: süre bitince eşitse berabere.
 
 Burada oyun "prototip"ten "oyun"a döner.
 
@@ -267,9 +269,10 @@ Vakit daralırsa şu sırayla feda et:
 
 ## Sıradaki adım
 
-**Faz 1 — `PlayerController`'ı Rigidbody2D'ye taşı.**
+**Faz 4 — `IInputSource` soyutlaması ve AI rakip.**
 
-Faz 0 hazır: layer'lar, collision matrix, klasörler, Input System ve asmdef kuruldu.
-Sahnedeki objelere layer atamak (Player/Ball/Ground/Wall) elle yapılacak ilk iş.
+Faz 0–3 tamam: proje yapısı, oyuncu fiziği, top vuruş hissi, maç kuralları.
+Sahada tek oyuncu var; ikinci oyuncu ve AI Faz 4'te geliyor.
 
-Yazdıktan sonra bana getir, birlikte bakalım.
+İlk iş `IInputSource` arayüzü — `PlayerController` input'un nereden geldiğini
+bilmemeli. Bu karar Faz 5'i (mobil) neredeyse bedavaya getirir.
