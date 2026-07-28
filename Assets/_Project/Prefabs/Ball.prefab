@@ -138,3 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreData: {fileID: 11400000, guid: f06b2d4204ec14a68b6367e3abb37b2c, type: 2}
   gameOverUI: {fileID: 0}
+  fallLimitY: -6
+  settings: {fileID: 11400000, guid: db1f73e209a048d1bac2cf157e9ab729, type: 2}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
