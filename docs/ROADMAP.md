@@ -139,7 +139,7 @@ Kafa topunda oyunun %70'i burada. Kontrol iyi hissettirmiyorsa gerisi kurtarmaz.
 
 ## Faz 3 — Maç kuralları ve state machine ✅ TAMAMLANDI (2026-07-28)
 
-**Eksik bırakılanlar (bilinçli):** `Paused` state'i, kale direği/üst direk, ekranda geri sayım rakamı, uzatma/altın gol. Beraberlik kuralı: süre bitince eşitse berabere.
+**Eksik bırakılanlar (bilinçli):** Uzatma/altın gol yok — süre bitince eşitse berabere. Duraklatma *menüsü* (devam/yeniden başla/menü butonları) Faz 6'ya bırakıldı; şimdilik ESC ile açılan basit bir overlay var.
 
 Burada oyun "prototip"ten "oyun"a döner.
 

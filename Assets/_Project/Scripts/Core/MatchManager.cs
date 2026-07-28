@@ -19,6 +19,8 @@ public class MatchManager : MonoBehaviour
 
     private float stateTimer;
     private int lastShownSecond = -1;
+    private int lastCountdown = -1;
+    private MatchState stateBeforePause;
 
     private Vector2 ballSpawn;
     private Vector2[] playerSpawns;
@@ -32,6 +34,9 @@ public class MatchManager : MonoBehaviour
     public event Action<MatchState> StateChanged;
     public event Action<Side> GoalScored;
     public event Action MatchEnded;
+
+    /// <summary>Kickoff geri sayimi; 0 "gizle" demek.</summary>
+    public event Action<int> CountdownChanged;
 
     void Awake()
     {
@@ -79,10 +84,16 @@ public class MatchManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
         switch (State)
         {
             case MatchState.KickOff:
                 stateTimer -= Time.deltaTime;
+                PublishCountdown();
                 if (stateTimer <= 0f) EnterState(MatchState.Playing);
                 break;
 
@@ -135,10 +146,12 @@ public class MatchManager : MonoBehaviour
                 ResetPositions();
                 SetPlayEnabled(false);
                 stateTimer = settings.kickOffDelay;
+                lastCountdown = -1;
                 break;
 
             case MatchState.Playing:
                 SetPlayEnabled(true);
+                CountdownChanged?.Invoke(0);
                 break;
 
             case MatchState.GoalScored:
@@ -165,6 +178,31 @@ public class MatchManager : MonoBehaviour
         }
     }
 
+    public void TogglePause()
+    {
+        if (State == MatchState.Paused) Resume();
+        else if (State != MatchState.MatchEnd) Pause();
+    }
+
+    private void Pause()
+    {
+        // Bilerek EnterState kullanmiyoruz: KickOff'a girmek pozisyonlari sifirlar,
+        // duraklatmanin ise oyunu oldugu yerde dondurmasi gerekir.
+        stateBeforePause = State;
+        State = MatchState.Paused;
+
+        SetPlayEnabled(false);
+        StateChanged?.Invoke(State);
+    }
+
+    private void Resume()
+    {
+        State = stateBeforePause;
+
+        SetPlayEnabled(State == MatchState.Playing);
+        StateChanged?.Invoke(State);
+    }
+
     private void SetPlayEnabled(bool enabled)
     {
         // Time.timeScale kullanmiyoruz: durdurmak sadece oynanisi ilgilendirir,
@@ -173,8 +211,20 @@ public class MatchManager : MonoBehaviour
 
         foreach (PlayerController player in players)
         {
+            // Once dondur: hizlar saklanacak, sonra input durumu temizlensin.
+            player.SetFrozen(!enabled);
             player.SetInputEnabled(enabled);
         }
+    }
+
+    /// <summary>Geri sayimi her karede degil, saniye degistikce yayinlar.</summary>
+    private void PublishCountdown()
+    {
+        int seconds = Mathf.Max(0, Mathf.CeilToInt(stateTimer));
+        if (seconds == lastCountdown) return;
+
+        lastCountdown = seconds;
+        CountdownChanged?.Invoke(seconds);
     }
 
     /// <summary>

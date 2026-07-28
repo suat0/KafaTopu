@@ -12,6 +12,9 @@ public class BallController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 lastSpawn;
 
+    private Vector2 storedVelocity;
+    private float storedAngularVelocity;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -79,17 +82,30 @@ public class BallController : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f;
+
+        storedVelocity = Vector2.zero;
+        storedAngularVelocity = 0f;
     }
 
-    /// <summary>Fizigi tamamen durdurur; gol kutlamasi ve kickoff sirasinda kullanilir.</summary>
+    /// <summary>
+    /// Fizigi durdurur/baslatir. Hizi saklayip geri yukluyoruz: duraklatip devam
+    /// edince topun momentumu kaybolmasin. Kickoff'ta zaten ResetTo sifirliyor.
+    /// </summary>
     public void SetSimulated(bool value)
     {
-        if (!value)
+        if (value)
         {
-            rb.velocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+            rb.simulated = true;
+            rb.velocity = storedVelocity;
+            rb.angularVelocity = storedAngularVelocity;
+            return;
         }
 
-        rb.simulated = value;
+        storedVelocity = rb.velocity;
+        storedAngularVelocity = rb.angularVelocity;
+
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.simulated = false;
     }
 }

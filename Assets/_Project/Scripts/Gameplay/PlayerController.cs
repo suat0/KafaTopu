@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferCounter;
     private bool isGrounded;
     private bool inputEnabled = true;
+    private Vector2 storedVelocity;
 
     void Awake()
     {
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!rb.simulated) return;
+
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer) != null;
 
         coyoteCounter = isGrounded ? coyoteTime : coyoteCounter - Time.fixedDeltaTime;
@@ -106,7 +109,24 @@ public class PlayerController : MonoBehaviour
         horizontalInput = 0f;
         jumpBufferCounter = 0f;
         jumpReleased = false;
-        rb.velocity = new Vector2(0f, rb.velocity.y);
+    }
+
+    /// <summary>
+    /// Fizigi durdurur. Hiz saklanip geri yukleniyor ki duraklatip devam edince
+    /// oyuncu havadaysa momentumunu kaybetmesin.
+    /// </summary>
+    public void SetFrozen(bool frozen)
+    {
+        if (!frozen)
+        {
+            rb.simulated = true;
+            rb.velocity = storedVelocity;
+            return;
+        }
+
+        storedVelocity = rb.velocity;
+        rb.velocity = Vector2.zero;
+        rb.simulated = false;
     }
 
     public void ResetTo(Vector2 position)
@@ -114,6 +134,7 @@ public class PlayerController : MonoBehaviour
         transform.position = position;
 
         rb.velocity = Vector2.zero;
+        storedVelocity = Vector2.zero;
         coyoteCounter = 0f;
         jumpBufferCounter = 0f;
     }

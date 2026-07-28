@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MatchSettings
   m_EditorClassIdentifier: 
   matchDuration: 90
-  kickOffDelay: 2
+  kickOffDelay: 3
   goalCelebrationDuration: 1.5

@@ -10,5 +10,8 @@ public enum MatchState
     GoalScored = 2,
 
     /// <summary>Sure bitti, sonuc ekrani.</summary>
-    MatchEnd = 3
+    MatchEnd = 3,
+
+    /// <summary>Oyuncu duraklatti. Cikinca oncekine geri donulur.</summary>
+    Paused = 4
 }
