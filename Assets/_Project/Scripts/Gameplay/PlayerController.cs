@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     private Rigidbody2D rb;
+    private IInputSource input;
     private float baseGravityScale;
 
     private float horizontalInput;
@@ -37,15 +38,39 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         baseGravityScale = rb.gravityScale;
+
+        input = ResolveInputSource();
+
+        if (input == null)
+        {
+            Debug.LogError($"{name}: IInputSource uygulayan etkin bir bilesen yok.", this);
+        }
+    }
+
+    /// <summary>
+    /// Ayni objedeki ilk *etkin* IInputSource'u secer. Boylece hem klavye hem AI
+    /// bileseni objede durabilir; Inspector'daki tik kutusuyla hangisinin gecerli
+    /// oldugunu degistirirsin.
+    /// </summary>
+    private IInputSource ResolveInputSource()
+    {
+        foreach (MonoBehaviour behaviour in GetComponents<MonoBehaviour>())
+        {
+            if (behaviour.enabled && behaviour is IInputSource source) return source;
+        }
+
+        return null;
     }
 
     void Update()
     {
-        if (!inputEnabled) return;
+        if (!inputEnabled || input == null) return;
 
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        input.Tick();
 
-        if (Input.GetButtonDown("Jump"))
+        horizontalInput = input.Horizontal;
+
+        if (input.JumpPressed)
         {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -54,7 +79,7 @@ public class PlayerController : MonoBehaviour
             jumpBufferCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonUp("Jump"))
+        if (input.JumpReleased)
         {
             jumpReleased = true;
         }

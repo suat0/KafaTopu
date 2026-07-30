@@ -161,7 +161,9 @@ Burada oyun "prototip"ten "oyun"a döner.
 
 ---
 
-## Faz 4 — Rakip: 2. oyuncu ve AI
+## Faz 4 — Rakip: 2. oyuncu ve AI ✅ TAMAMLANDI (2026-07-30)
+
+**Eksik bırakılanlar (bilinçli):** Zorluk seviyesi presetleri ve 1P/2P mod seçimi UI'ı Faz 6'ya bırakıldı. Şimdilik `Player2` üzerinde iki input bileşeni duruyor; Inspector'daki tik kutusuyla AI ↔ klavye geçişi yapılıyor.
 
 **Kritik tasarım kararı — bunu doğru yaparsan gerisi bedava gelir:**
 
@@ -269,10 +271,10 @@ Vakit daralırsa şu sırayla feda et:
 
 ## Sıradaki adım
 
-**Faz 4 — `IInputSource` soyutlaması ve AI rakip.**
+**Faz 5 — Input System ve mobil dokunmatik.**
 
-Faz 0–3 tamam: proje yapısı, oyuncu fiziği, top vuruş hissi, maç kuralları.
-Sahada tek oyuncu var; ikinci oyuncu ve AI Faz 4'te geliyor.
+Faz 0–4 tamam: proje yapısı, oyuncu fiziği, top vuruş hissi, maç kuralları,
+ikinci oyuncu ve AI.
 
-İlk iş `IInputSource` arayüzü — `PlayerController` input'un nereden geldiğini
-bilmemeli. Bu karar Faz 5'i (mobil) neredeyse bedavaya getirir.
+`IInputSource` kurulduğu için bu faz kısa: `TouchInputSource` yazılacak ve
+Input Actions asset'i eklenecek. `PlayerController`'a hiç dokunulmayacak.
