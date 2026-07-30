@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 688192dca732482c9fc00fca9ff06103, type: 3}
-  m_Name: AISettings
+  m_Name: AISettings_Easy
   m_EditorClassIdentifier: 
-  displayName: Normal
-  reactionDelay: 0.15
-  aimError: 0.6
-  moveDeadzone: 0.35
-  jumpRange: 1.8
-  jumpMinHeight: 0.3
+  displayName: Kolay
+  reactionDelay: 0.35
+  aimError: 1.4
+  moveDeadzone: 0.6
+  jumpRange: 1.4
+  jumpMinHeight: 0.5

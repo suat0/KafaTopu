@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -12,6 +13,7 @@ public class MatchEndUI : MonoBehaviour
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button menuButton;
 
     void OnEnable()
     {
@@ -20,6 +22,7 @@ public class MatchEndUI : MonoBehaviour
 
         // Inspector'dan baglanan onClick'ler refactor'da sessizce kopar - koddan bagla.
         restartButton.onClick.AddListener(Restart);
+        menuButton.onClick.AddListener(GoToMenu);
 
         panel.SetActive(false);
     }
@@ -28,7 +31,9 @@ public class MatchEndUI : MonoBehaviour
     {
         matchManager.MatchEnded -= Show;
         matchManager.StateChanged -= HandleStateChanged;
+
         restartButton.onClick.RemoveListener(Restart);
+        menuButton.onClick.RemoveListener(GoToMenu);
     }
 
     private void HandleStateChanged(MatchState state)
@@ -55,5 +60,10 @@ public class MatchEndUI : MonoBehaviour
     private void Restart()
     {
         matchManager.RestartMatch();
+    }
+
+    private void GoToMenu()
+    {
+        SceneManager.LoadScene(SceneNames.MainMenu);
     }
 }

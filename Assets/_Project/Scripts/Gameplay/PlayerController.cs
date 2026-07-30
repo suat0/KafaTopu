@@ -48,6 +48,15 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Input bilesenleri calisma aninda degistirildiginde (bkz. GameModeApplier)
+    /// yeniden secim yaptirir.
+    /// </summary>
+    public void RefreshInputSource()
+    {
+        input = ResolveInputSource();
+    }
+
+    /// <summary>
     /// Ayni objedeki ilk *etkin* IInputSource'u secer. Boylece hem klavye hem AI
     /// bileseni objede durabilir; Inspector'daki tik kutusuyla hangisinin gecerli
     /// oldugunu degistirirsin.

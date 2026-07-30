@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AISettings", menuName = "Game/AI Settings")]
 public class AISettings : ScriptableObject
 {
+    [Tooltip("Menude gorunen ad")]
+    public string displayName = "Normal";
+
     [Tooltip("Hedefini bu araliklarla gunceller - buyudukce AI gec kalir")]
     public float reactionDelay = 0.15f;
 

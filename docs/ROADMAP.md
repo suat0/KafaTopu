@@ -205,7 +205,9 @@ Faz 4'teki arayüz sayesinde bu faz kısa.
 
 ---
 
-## Faz 6 — Sahne akışı ve UI
+## Faz 6 — Sahne akışı ve UI ✅ TAMAMLANDI (2026-07-30)
+
+**Eksik bırakılanlar (bilinçli):** Ayrı bir "Ayarlar" ekranı yok — içine koyulacak tek şey ses ayarı olurdu, ses ise Faz 7'de geliyor. Boş ekran yapmak yerine ses gelince eklenecek. `Boot` sahnesi de yok: kalıcı sistem (ses yöneticisi) henüz olmadığı için gereksiz bir katman olurdu, o da Faz 7'nin işi.
 
 **Sahneler:** `Boot` (init, ayar yükleme) → `MainMenu` → `Game`.
 Boot sahnesi şart değil ama kalıcı sistemler (ses, ayarlar) için temiz bir giriş noktası verir.
@@ -275,9 +277,10 @@ Vakit daralırsa şu sırayla feda et:
 
 ## Sıradaki adım
 
-**Faz 6 — Sahne akışı ve menüler.**
+**Faz 7 — Cila (juice).**
 
-Faz 0–5 tamam. Faz 3, 4 ve 5'te "Faz 6'ya bıraktım" dediğim her şey burada
-toplanıyor: 1P/2P mod seçimi, zorluk seçimi, duraklatma menüsünün butonları.
+Faz 0–6 tamam. Oyun baştan sona oynanabilir: menü, mod ve zorluk seçimi,
+maç, duraklatma, sonuç ekranı.
 
-Sahneler: `Boot` → `MainMenu` → `Game`.
+Sırada ses, partikül, kamera sarsıntısı, hit stop ve skor kaydı var. Ses
+gelince Faz 6'da atlanan "Ayarlar" ekranı da anlam kazanacak.

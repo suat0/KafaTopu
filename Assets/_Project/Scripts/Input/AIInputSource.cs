@@ -27,6 +27,12 @@ public class AIInputSource : MonoBehaviour, IInputSource
         if (ball != null) ballBody = ball.GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>Zorluk secimi menuden geldigi icin calisma aninda degistirilebilmeli.</summary>
+    public void SetSettings(AISettings value)
+    {
+        if (value != null) settings = value;
+    }
+
     public void Tick()
     {
         if (ball == null)

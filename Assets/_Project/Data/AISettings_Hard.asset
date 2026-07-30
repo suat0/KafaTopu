@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 688192dca732482c9fc00fca9ff06103, type: 3}
-  m_Name: AISettings
+  m_Name: AISettings_Hard
   m_EditorClassIdentifier: 
-  displayName: Normal
-  reactionDelay: 0.15
-  aimError: 0.6
-  moveDeadzone: 0.35
-  jumpRange: 1.8
-  jumpMinHeight: 0.3
+  displayName: Zor
+  reactionDelay: 0.05
+  aimError: 0.15
+  moveDeadzone: 0.2
+  jumpRange: 2.2
+  jumpMinHeight: 0.15
