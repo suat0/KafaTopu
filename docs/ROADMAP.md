@@ -189,7 +189,11 @@ public interface IInputSource {
 
 ---
 
-## Faz 5 — Input System (PC + mobil)
+## Faz 5 — Dokunmatik kontroller ✅ TAMAMLANDI (2026-07-30)
+
+**Plandan sapma:** Input Actions asset'i kurulmadı. Gerekçe: Input System'in bu projeye vaat ettiği asıl şey soyutlamaydı, onu Faz 4'te `IInputSource` ile daha basit ve test edilebilir biçimde kurduk; üstüne Input Actions koymak aynı işi iki katmanda yapmak olurdu. Paket kurulu ve `Both` modunda — gamepad veya tuş yeniden atama gerekirse `InputSystemInputSource : IInputSource` yazıp eklemek yeterli, `PlayerController`'a dokunmadan.
+
+**Eksik bırakılanlar:** Butonların görseli placeholder (yarı saydam kare + ASCII etiket); düzgün ikonlar Faz 7'de. Player2 için dokunmatik yok — mobilde 1P vs AI mantıklı, iki parmakla tek cihazda kafa topu zaten oynanmıyor.
 
 Faz 4'teki arayüz sayesinde bu faz kısa.
 
@@ -271,10 +275,9 @@ Vakit daralırsa şu sırayla feda et:
 
 ## Sıradaki adım
 
-**Faz 5 — Input System ve mobil dokunmatik.**
+**Faz 6 — Sahne akışı ve menüler.**
 
-Faz 0–4 tamam: proje yapısı, oyuncu fiziği, top vuruş hissi, maç kuralları,
-ikinci oyuncu ve AI.
+Faz 0–5 tamam. Faz 3, 4 ve 5'te "Faz 6'ya bıraktım" dediğim her şey burada
+toplanıyor: 1P/2P mod seçimi, zorluk seçimi, duraklatma menüsünün butonları.
 
-`IInputSource` kurulduğu için bu faz kısa: `TouchInputSource` yazılacak ve
-Input Actions asset'i eklenecek. `PlayerController`'a hiç dokunulmayacak.
+Sahneler: `Boot` → `MainMenu` → `Game`.
